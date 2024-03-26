@@ -1,0 +1,34 @@
+{
+    "name": "xfdl",
+    "scopeName": "source.xfdl",
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "patterns": [
+        {
+            "include": "#nexa-js"
+        },
+        {
+            "include": "text.xml"
+        }
+    ],
+    "repository": {
+        "nexa-js": {
+            "begin": "(<Script[^>]*>(<!\\[CDATA\\[)?)",
+            "beginCaptures": {
+                "0": { "name": "meta.tag.script.begin.xml" },
+                "1": { "name": "punctuation.definition.tag.script.begin.xml" },
+                "2": { "name": "punctuation.section.cdata.begin.xml" }
+            },
+            "end": "(\\]\\]>)?(</Script>)",
+            "endCaptures": {
+                "0": { "name": "meta.tag.script.end.xml" },
+                "1": { "name": "punctuation.section.cdata.end.xml" },
+                "2": { "name": "punctuation.definition.tag.script.end.xml" }
+            },
+            "patterns": [
+                {
+                    "include": "source.js"
+                }
+            ]
+        }
+    }
+}

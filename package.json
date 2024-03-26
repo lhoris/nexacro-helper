@@ -1,0 +1,121 @@
+{
+  "name": "nexacro-n-helper",
+  "displayName": "Nexacro N Helper",
+  "description": "*.xadl and *.xfdl to JavaScript files.",
+  "version": "0.0.1",
+  "publisher": "lhoris",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.87.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9"
+  },
+  "contributes": {
+    "configuration": {
+      "title": "Nexacro N Helper",
+      "properties": {
+        "nexacro.deployFilePath": {
+          "type": "string",
+          "default": "C:\\Program Files\\TOBESOFT\\Nexacro N\\Tools\\nexacrodeploy.exe",
+          "description": "Path to the nexacrodeploy.exe file."
+        },
+        "nexacro.baseLibFolderPath": {
+          "type": "string",
+          "default": "C:\\Program Files (x86)\\TOBESOFT\\Nexacro N\\SDK\\24.0.0\\nexacrolib",
+          "description": "Base Library Path."
+        },
+        "nexacro.xprjFilePath": {
+          "type": "string",
+          "default": "",
+          "description": "Project settings file (.XPRJ) path."
+        },
+        "nexacro.generateRuleFolderPath": {
+          "type": "string",
+          "default": "C:\\Program Files (x86)\\TOBESOFT\\Nexacro N\\SDK\\24.0.0\\generate",
+          "description": "Path where Generate Rule files exist."
+        },
+        "nexacro.generateFolderPath": {
+          "type": "string",
+          "default": "C:\\",
+          "description": "Path to the target folder for conversion to JavaScript file."
+        },
+        "nexacro.enableGenerateOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable the generation of files after saving (.xfdl, .xadl, .xprj) files."
+        }
+      }
+    },
+    "submenus": [
+      {
+        "id": "nexacro.submenu",
+        "label": "Nexacro Helper"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "explorerResourceIsFolder || resourceExtname == .xfdl || resourceExtname == .xadl || resourceExtname == .xprj",
+          "submenu": "nexacro.submenu",
+          "group": "nexacro@1"
+        }
+      ],
+      "nexacro.submenu": [
+        {
+          "command": "nexacro.generateFile",
+          "group": "nexacro@2"
+        },
+        {
+          "command": "nexacro.regenerateFile",
+          "group": "nexacro@1"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "nexacro.generateFile",
+        "title": "Nexacro: Generate File"
+      },
+      {
+        "command": "nexacro.regenerateFile",
+        "title": "Nexacro: Regenerate File"
+      }
+    ],
+    "languages": [
+      {
+        "id": "xfdl",
+        "aliases": ["Nexacro"],
+        "extensions": [".xfdl", ".xadl", ".xprj"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "xfdl",
+        "scopeName": "source.xfdl",
+        "path": "./syntaxes/xfdl.tmLanguage.json"
+      }
+    ]
+  }  
+}
